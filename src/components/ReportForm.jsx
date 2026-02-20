@@ -25,7 +25,8 @@ export default function ReportForm() {
     e.preventDefault();
     
     try {
-      const response = await fetch('/report', {
+      // In production, you would replace this with your actual backend URL.
+      const response = await fetch('http://localhost:5000/report', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

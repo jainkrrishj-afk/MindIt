@@ -14,7 +14,8 @@ export default function ChatUI() {
     setInput('');
 
     try {
-      const response = await fetch('/chat', {
+      // In production, you would replace this with your actual backend URL.
+      const response = await fetch('http://localhost:5000/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: newMessage.text })
