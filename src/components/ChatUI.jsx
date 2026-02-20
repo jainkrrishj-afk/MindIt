@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function ChatUI() {
   const [messages, setMessages] = useState([
@@ -33,33 +36,42 @@ export default function ChatUI() {
   };
 
   return (
-    <div className="component-box" style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px', height: '400px', display: 'flex', flexDirection: 'column' }}>
-      <h2>Support Chat</h2>
-      <div style={{ flex: 1, overflowY: 'auto', marginBottom: '15px', padding: '10px', backgroundColor: '#f9f9f9', borderRadius: '4px' }}>
-        {messages.map((msg) => (
-          <div 
-            key={msg.id} 
-            style={{ 
-              textAlign: msg.sender === 'user' ? 'right' : 'left',
-              margin: '5px 0',
-              color: msg.sender === 'user' ? '#1565c0' : '#333'
-            }}
-          >
-            <strong>{msg.sender === 'user' ? 'You' : 'Bot'}:</strong> {msg.text}
-          </div>
-        ))}
-      </div>
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <input
-          type="text"
-          style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-          placeholder="Type a message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-        />
-        <button onClick={sendMessage} style={{ padding: '10px 20px', cursor: 'pointer' }}>Send</button>
-      </div>
-    </div>
+    <Card className="w-full h-full flex flex-col">
+      <CardHeader>
+        <CardTitle>Support Chat</CardTitle>
+      </CardHeader>
+      <CardContent className="flex-1 overflow-y-auto">
+        <div className="space-y-4">
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div
+                className={`max-w-xs p-3 rounded-lg ${
+                  msg.sender === 'user'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted'
+                }`}
+              >
+                <p className="text-sm">{msg.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+      <CardFooter>
+        <div className="flex w-full space-x-2">
+          <Input
+            type="text"
+            placeholder="Type a message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+          />
+          <Button onClick={sendMessage}>Send</Button>
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
